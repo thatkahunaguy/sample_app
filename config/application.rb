@@ -24,5 +24,7 @@ module SampleApp
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
+    # ADDED THE LINE BELOW TO ENABLE BOOTSTRAP - MAKES BOOTSTRAP-SASS COMPAT W/ ASSET PIPELINE
+    config.assets.precompile += %w(*.png *.jpg *.jpeg *.gif)
   end
 end
