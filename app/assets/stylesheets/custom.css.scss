@@ -1,5 +1,9 @@
 @import "bootstrap";
 
+/* mixins, variables, etc. */
+
+$grayMediumLight: #eaeaea;
+
 /* universal */
 
 html {
@@ -22,10 +26,9 @@ textarea {
  
 .center {
   text-align: center;
-}
-
-.center h1 {
-  margin-bottom: 10px;
+  h1 {
+    margin-bottom: 10px;
+  }
 }
 
 /* typography */
@@ -47,7 +50,7 @@ h2 {
   margin-bottom: 30px;
   text-align: center;
   font-weight: normal;
-  color: #999;
+  color: $grayLight;
 }
 
 p {
@@ -55,21 +58,51 @@ p {
   line-height: 1.7em;
 }
 
-/* header - note # indicates a CSS ID which was used vs class since logo only appears once */
+/* logo - note # indicates a CSS ID which was used vs class since logo only appears once */
 
 #logo {
   float: left;
   margin-right: 10px;
   font-size: 1.7em;
-  color: #fff;
+  color: white;
   text-transform: uppercase;
   letter-spacing: -1px;
   padding-top: 9px;
   font-weight: bold;
   line-height: 1;
+  &:hover {
+  	color: $purple;
+  	text-decoration: none;
+	}
+
 }
 
-#logo:hover {
-  color: #fff;
-  text-decoration: none;
+
+/* footer */
+
+footer {
+  margin-top: 45px;
+  padding-top: 5px;
+  border-top: 1px solid $grayMediumLight;
+  color: $grayLight;
+  a {
+  color: #555;
+  }
+  a:hover {
+    color: #222;
+  }
+
+  small {
+    float: left;
+  }
+
+  ul {
+    float: right;
+    list-style: none;
+  }
+
+  ul li {
+    float: left;
+    margin-left: 10px;
+  }
 }
