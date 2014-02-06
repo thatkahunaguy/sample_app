@@ -8,15 +8,35 @@ describe "Static pages" do
 # to put expect(page).to everywhere as we did before
   subject { page }
 
-  describe "Home page" do
+# this shared examples is only used right no on Home as noted below
+  shared_examples_for "all static pages" do
+# using should rather than expect(page).to for a more compact version 
+    it { should have_selector('h1', text: heading) }
+    it { should have_title(full_title(page_title)) }
+# test this link clicking
+    it "should have the right links on the layout" do
+      click_link "About"
+      expect(page).to have_title(full_title('About Us'))
+    end
+  end
+
+
+
+
+
   
-  # before each action below do whats in the brackets
+# this is an alternate way to perform the tests shown in help, about, contact
+# using the shared_examples_for block above.  Since this didn't really make
+# the code any more compact I didn't change help, about, contact so that I
+# could retain both uses in the code.  As we add more tests to the code that
+# are shared this will probably change
+  describe "Home page" do
+    # before each action below do whats in the brackets
     before { visit root_path }
-    
-  # using should rather than expect(page).to for a more compact version 
-    it { should have_content('Sample App') }
-  # right now this refers to a duplicate full_title helper in the support folder
-    it { should have_title(full_title('')) }
+    let(:heading)    { 'Sample App' }
+    let(:page_title) { '' }
+
+    it_should_behave_like "all static pages"
     it { should_not have_title('| Home') }
   end
 
