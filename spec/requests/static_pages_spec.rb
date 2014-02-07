@@ -16,7 +16,19 @@ describe "Static pages" do
 # test this link clicking
     it "should have the right links on the layout" do
       click_link "About"
+# errors out if I use the it syntax - probably because it's nested and doesn't
+# know which it I'm referring to, about or the calling page
       expect(page).to have_title(full_title('About Us'))
+      click_link "Contact"
+      expect(page).to have_title(full_title('Contact'))
+      click_link "Help"
+      expect(page).to have_title(full_title('Help'))
+      click_link "Home"
+      expect(page).to have_title(full_title(''))
+      click_link "sample app"
+      expect(page).to have_title(full_title(''))
+      click_link "Sign up now!"
+      expect(page).to have_title(full_title('Sign up'))
     end
   end
 
@@ -42,22 +54,22 @@ describe "Static pages" do
 
   describe "Help page" do
     before { visit help_path }
-
-    it { should have_content('Help') }
-    it { should have_title(full_title('Help')) }
+    let(:heading)    { 'Help' }
+    let(:page_title) { 'Help' }
+    it_should_behave_like "all static pages"
   end
 
   describe "About page" do
     before { visit about_path }
-
-    it { should have_content('About') }
-    it { should have_title(full_title('About Us')) }
+    let(:heading)    { 'About' }
+    let(:page_title) { 'About' }
+    it_should_behave_like "all static pages"
   end
 
   describe "Contact page" do
     before { visit contact_path }
-
-    it { should have_content('Contact') }
-    it { should have_title(full_title('Contact')) }
+    let(:heading)    { 'Contact Us' }
+    let(:page_title) { 'Contact Us' }
+    it_should_behave_like "all static pages"
   end
 end
