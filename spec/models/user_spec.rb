@@ -2,19 +2,20 @@ require 'spec_helper'
 
 describe User do
 
-  before { @user = User.new(name: "Example User", email: "user@example.com"
-#                ,password: "foobar", password_confirmation: "foobar"
-                            ) }
+  before { @user = User.new(name: "Example User", email: "user@example.com",
+                password: "foobar", password_confirmation: "foobar") }
 
   subject { @user }
 
 #these are the columns in the dbase we want to be able to CRUD
   it { should respond_to(:name) }
   it { should respond_to(:email) }
-#  it { should respond_to(:password_digest) }
+  it { should respond_to(:password_digest) }
 #password and its confirmation will only exist in memory, not the database
-#  it { should respond_to(:password) }
-#  it { should respond_to(:password_confirmation) }
+  it { should respond_to(:password) }
+  it { should respond_to(:password_confirmation) }
+#methods it should respond to
+  it { should respond_to(:authenticate) }
   it { should be_valid }
 
 #test that a validation fails when name isn't present
@@ -30,10 +31,10 @@ describe User do
   end
 
 #test that a validation fails when password isn't present
-#  describe "when password is not present" do
- #   before { @user.password = " ", @user.password_confirmation = " " }
-  #  it { should_not be_valid }
-  #end
+  describe "when password is not present" do
+    before { @user.password = " ", @user.password_confirmation = " " }
+    it { should_not be_valid }
+  end
 
 #test that a validation fails when name is too long
   describe "when name is too long (> 50 char)" do
@@ -78,9 +79,32 @@ describe User do
   end
 
 #test for password mismatch
-#  describe "when password doesn't match confirmation" do
- #   before { @user.password_confirmation = "mismatch" }
-  #  it { should_not be_valid }
-  #end
+  describe "when password doesn't match confirmation" do
+    before { @user.password_confirmation = "mismatch" }
+    it { should_not be_valid }
+  end
+
+#test authentication
+describe "return value of authenticate method" do
+  before { @user.save }
+  let(:found_user) { User.find_by(email: @user.email) }
+
+  describe "with valid password" do
+    it { should eq found_user.authenticate(@user.password) }
+  end
+
+  describe "with invalid password" do
+    let(:user_for_invalid_password) { found_user.authenticate("invalid") }
+
+    it { should_not eq user_for_invalid_password }
+    specify { expect(user_for_invalid_password).to be_false }
+  end
+end
+
+# too short a password
+describe "with a password that's too short" do
+  before { @user.password = @user.password_confirmation = "a" * 5 }
+  it { should be_invalid }
+end
 
 end
