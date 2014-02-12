@@ -146,7 +146,37 @@ aside {
   margin-right: 10px;
 }
 
+/* forms */
+
+input, textarea, select, .uneditable-input {
+  border: 1px solid #bbb;
+  width: 100%;
+  margin-bottom: 15px;
+  @include box_sizing;
+}
+
+input {
+  height: auto !important;
+}
+
+/* css class defn for error_explanation */
+#error_explanation {
+  color: #f00;
+  ul {
+    list-style: none;
+    margin: 0 0 18px 0;
+  }
+}
+
+/* Rails automatically uses this CSS class in fields with errors */
+/* @ extend uses these 2 Bootstrap classes */
+.field_with_errors {
+  @extend .control-group;
+  @extend .error;
+}
+
 /* miscellaneous */
+
 /* make the debug info look nice */
 .debug_dump {
   clear: both;
@@ -155,3 +185,4 @@ aside {
   margin-top: 45px;
   @include box_sizing;
 }
+
