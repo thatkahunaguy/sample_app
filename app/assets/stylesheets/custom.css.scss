@@ -4,6 +4,13 @@
 
 $grayMediumLight: #eaeaea;
 
+/* mixin for the debug box to look nice */
+@mixin box_sizing {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
 /* universal */
 
 html {
@@ -105,4 +112,14 @@ footer {
     float: left;
     margin-left: 10px;
   }
+}
+
+/* miscellaneous */
+/* make the debug info look nice */
+.debug_dump {
+  clear: both;
+  float: left;
+  width: 100%;
+  margin-top: 45px;
+  @include box_sizing;
 }
