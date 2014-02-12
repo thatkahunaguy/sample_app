@@ -14,7 +14,8 @@
     <div class="container">
     <%# this adds a flash message if needed (something displayed only on the next page) %>
       <% flash.each do |key, value| %>
-        <div class="alert alert-<%= key %>"><%= value %></div>
+        <%# this replaces some initial html & erb with the rails helper content_tag %>
+        <%= content_tag(:div, value, class: "alert alert-#{key}") %>        
       <% end %>
       <%= yield %>
 	  <%= render 'layouts/footer' %>
