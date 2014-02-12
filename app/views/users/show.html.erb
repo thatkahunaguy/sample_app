@@ -1,1 +1,13 @@
-<%= @user.name %>, <%= @user.email %>
+<% provide(:title, @user.name) %>
+<! row and span4 are sidebar elements of Bootstrap !>
+<div class="row">
+  <aside class="span4">
+    <section>
+      <h1>
+      <! this is using gravatar service for avatar icons !>
+        <%= gravatar_for @user %>
+        <%= @user.name %>
+      </h1>
+    </section>
+  </aside>
+</div>
