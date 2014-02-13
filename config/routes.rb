@@ -3,12 +3,15 @@ SampleApp::Application.routes.draw do
   # allow CRUD of user info from dbase - replaced get "users/new"
   # by implementing a RESTful users resource
   resources :users
+  resources :sessions, only: [:new, :create, :destroy]
   
   root  'static_pages#home'
-  match '/help', to: 'static_pages#help', via: 'get'
-  match '/about', to: 'static_pages#about', via: 'get'
+  match '/help', to: 'static_pages#help',       via: 'get'
+  match '/about', to: 'static_pages#about',     via: 'get'
   match '/contact', to: 'static_pages#contact', via: 'get'
-  match '/signup', to: 'users#new', via: 'get'
+  match '/signup', to: 'users#new',             via: 'get'
+  match '/signin',  to: 'sessions#new',         via: 'get'
+  match '/signout', to: 'sessions#destroy',     via: 'delete'
 
   
   # The priority is based upon order of creation: first created -> highest priority.
