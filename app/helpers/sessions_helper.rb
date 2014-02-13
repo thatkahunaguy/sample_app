@@ -7,6 +7,8 @@ module SessionsHelper
     self.current_user = user
   end
 
+
+
 # define a boolean for use in branching if a user is signed in or not
   def signed_in?
     !current_user.nil?
@@ -27,4 +29,15 @@ module SessionsHelper
 # ||= is or equals meaning if current user exists(true) find_by doesn't execute
     @current_user ||= User.find_by(remember_token: remember_token)
   end
+    
+  def sign_out
+# change the remember_token in the database in case the user cookie is stolen
+    current_user.update_attribute(:remember_token,
+                                  User.encrypt(User.new_remember_token))
+# delete the cookie
+    cookies.delete(:remember_token)
+# update the current_user to nil
+    self.current_user = nil
+  end
+  
 end

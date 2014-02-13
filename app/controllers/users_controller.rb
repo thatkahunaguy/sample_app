@@ -11,7 +11,9 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-     # there is no create view so we want to redirect to the user profile just created
+     # there is no create view so we want to sign_in & redirect to
+     # the user profile just created
+      sign_in @user
       flash[:success] = "Welcome to the Sample App!"
       redirect_to @user
     else
