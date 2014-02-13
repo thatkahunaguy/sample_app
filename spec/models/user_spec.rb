@@ -11,6 +11,7 @@ describe User do
   it { should respond_to(:name) }
   it { should respond_to(:email) }
   it { should respond_to(:password_digest) }
+  it { should respond_to(:remember_token) }
 #password and its confirmation will only exist in memory, not the database
   it { should respond_to(:password) }
   it { should respond_to(:password_confirmation) }
@@ -118,5 +119,10 @@ describe "with a password that's too short" do
   it { should be_invalid }
 end
 
+# ensure a non-blank remember_token is in place before saving
+  describe "remember token" do
+    before { @user.save }
+    its(:remember_token) { should_not be_blank }
+  end
 
 end
