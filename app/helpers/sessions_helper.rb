@@ -29,6 +29,10 @@ module SessionsHelper
 # ||= is or equals meaning if current user exists(true) find_by doesn't execute
     @current_user ||= User.find_by(remember_token: remember_token)
   end
+
+  def current_user?(user)
+    user == current_user
+  end
     
   def sign_out
 # change the remember_token in the database in case the user cookie is stolen
@@ -38,6 +42,18 @@ module SessionsHelper
     cookies.delete(:remember_token)
 # update the current_user to nil
     self.current_user = nil
+  end
+
+# redirect to the page the user was trying to go to rather than the default if needed
+  def redirect_back_or(default)
+    redirect_to(session[:return_to] || default)
+    session.delete(:return_to)
+  end
+
+# store the page the user was trying to get to
+  def store_location
+# only for get requests so we don't store post requests etc and get an error with a redirect
+    session[:return_to] = request.url if request.get?
   end
   
 end
