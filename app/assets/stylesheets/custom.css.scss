@@ -2,7 +2,7 @@
 
 /* mixins, variables, etc. */
 
-$grayMediumLight: #eaeaea;
+$gray-mediumlight: #eaeaea;
 
 /* mixin for the debug box to look nice */
 @mixin box_sizing {
@@ -57,7 +57,7 @@ h2 {
   margin-bottom: 30px;
   text-align: center;
   font-weight: normal;
-  color: $grayLight;
+  color: $gray-light;
 }
 
 p {
@@ -78,7 +78,7 @@ p {
   font-weight: bold;
   line-height: 1;
   &:hover {
-  	color: $purple;
+  	color: $brand-primary;
   	text-decoration: none;
 	}
 
@@ -90,8 +90,8 @@ p {
 footer {
   margin-top: 45px;
   padding-top: 5px;
-  border-top: 1px solid $grayMediumLight;
-  color: $grayLight;
+  border-top: 1px solid $gray-mediumlight;
+  color: $gray-light;
   a {
   color: #555;
   }
@@ -119,7 +119,7 @@ footer {
 aside {
   section {
     padding: 10px 0;
-    border-top: 1px solid $grayLighter;
+    border-top: 1px solid $gray-lighter;
     &:first-child {
       border: 0;
       padding-top: 0;
@@ -186,3 +186,16 @@ input {
   @include box_sizing;
 }
 
+/* this formats the index nicely - before gravatars overlapped etc */
+.users {
+  list-style: none;
+  margin: 0;
+  li {
+    overflow: auto;
+    padding: 10px 0;
+    border-top: 1px solid $gray-lighter;
+    &:last-child {
+      border-bottom: 1px solid $gray-lighter;
+    }
+  }
+}
