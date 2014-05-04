@@ -2,11 +2,12 @@ class UsersController < ApplicationController
 # the only hash restricts the before filter to the edit, index, and update
 # functions - in this case it runs :signed_in_user before those
 # this is authentication
-  before_action :signed_in_user, only: [:edit, :update, :index]
+  before_action :signed_in_user, only: [:edit, :update, :index, :destroy]
   
   # make sure the user is the correct one in addition to being signed in
-  # this is authorization
+  # this is authorization for user updates
   before_action :correct_user,   only: [:edit, :update]
+  before_action :admin_user, only: [:destroy]
   
   def show
     @user = User.find(params[:id])
@@ -81,6 +82,11 @@ class UsersController < ApplicationController
     # use the params hash to find the user by id
       @user = User.find(params[:id])
       redirect_to(root_url) unless current_user?(@user)
+    end
+
+# intercept any destroy requests from users who aren't admins
+    def admin_user
+        redirect_to(root_url) unless current_user.admin?
     end
 
 end
