@@ -1,9 +1,13 @@
 class UsersController < ApplicationController
 # the only hash restricts the before filter to the edit, index, and update
 # functions - in this case it runs :signed_in_user before those
+# this is authentication
   before_action :signed_in_user, only: [:edit, :update, :index]
+  
   # make sure the user is the correct one in addition to being signed in
+  # this is authorization
   before_action :correct_user,   only: [:edit, :update]
+  
   def show
     @user = User.find(params[:id])
   end
@@ -27,19 +31,28 @@ class UsersController < ApplicationController
   end
   
   def index
-    @users = User.all
+  # replace User.all with pagination - default is 30 objects per page
+    @users = User.paginate(page: params[:page])
   end
   
   def edit
   end
+  
+  def destroy
+    User.find(params[:id]).destroy
+    flash[:success] = "User destroyed."
+    redirect_to users_path
+  end
 
-# update (CRUD) happens when patch - Rails automatically does patch when
+# update (CRUD) happens when html issues patch - Rails automatically does patch when
 # @user.new_record? is false and post(or create) when it's true
   def update   
     # note the use of user_params strong parameters to avoid mass assignment vulnerability
+    # see below what attributes are allowed to be passed in the user_params definition
     if @user.update_attributes(user_params)
         flash[:success] = "Profile updated"
         redirect_to @user
+    # rerender the edit page on unsuccessful update
     else
       render 'edit'
     end
@@ -62,7 +75,7 @@ class UsersController < ApplicationController
         redirect_to signin_url, notice: "Please sign in."
       end
     end
-# note that the @ user=... used to be the first part of every action, now it's been
+# note that the @user=... used to be the first part of every action, now it's been
 # removed from edit and update and included as part of the before filter
     def correct_user
     # use the params hash to find the user by id

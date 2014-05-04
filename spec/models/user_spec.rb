@@ -17,7 +17,20 @@ describe User do
   it { should respond_to(:password_confirmation) }
 #methods it should respond to
   it { should respond_to(:authenticate) }
+  it { should respond_to(:admin) }
+
   it { should be_valid }
+  it { should_not be_admin }
+
+# test that admin boolean works for admin user
+  describe "with admin attribute set to 'true'" do
+    before do
+      @user.save!
+      @user.toggle!(:admin)
+    end
+
+    it { should be_admin }
+  end
 
 #test that a validation fails when name isn't present
   describe "when name is not present" do

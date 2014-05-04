@@ -1,0 +1,11 @@
+<%# partial pulled from the user index layout to make code more compact with render %>
+<li>
+  <%= gravatar_for user, size: 52 %>
+  <%= link_to user.name, user %>
+  <%# only show delete link to admins and not for themselves %>
+  <% if current_user.admin? && !current_user?(user)  %>
+  <%# rails uses javascript here for the delete method, alternate way provided in 9.4.2%>
+    | <%= link_to "delete", user, method: :delete,
+             data: { confirm: "Do you really want to delete this user? [javascript must be enabled]" } %>
+  <% end %>
+</li>
