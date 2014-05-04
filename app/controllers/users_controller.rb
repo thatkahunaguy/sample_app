@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+# these are before filters which run routine before certain actions
 # the only hash restricts the before filter to the edit, index, and update
 # functions - in this case it runs :signed_in_user before those
 # this is authentication

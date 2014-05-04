@@ -32,6 +32,7 @@ describe "Authentication" do
         
         
         # why does sign_in not work when I had it in spec_helper but does from support/utilities?
+        # should probably have tests to verify the links below don't appear when not signed in
         before { sign_in user }
 
         it { should have_title(user.name) }
