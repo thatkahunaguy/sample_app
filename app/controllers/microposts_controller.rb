@@ -8,6 +8,8 @@ class MicropostsController < ApplicationController
       flash[:success] = "New micropost created!"
       redirect_to root_url
     else
+    # home needs instance variable feed items so duplicate from static controller
+      @feed_items = current_user.feed.paginate(page: params[:page])
       render 'static_pages/home'
     end
   end

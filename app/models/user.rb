@@ -22,6 +22,13 @@ class User < ActiveRecord::Base
 # and adds an authenticate method to put the hash in password_digest
   validates :password, length: { minimum: 6 }
   has_secure_password
+
+# this is the user feed method which will allow following posts, initially users own
+  def feed
+    # This is preliminary. See "Following users" for the full implementation.
+    Micropost.where("user_id = ?", id)
+  end  
+  
   
 # new token and encrypt are attached to the User class because they are used
 # outside the User model and don't require a user instance to function

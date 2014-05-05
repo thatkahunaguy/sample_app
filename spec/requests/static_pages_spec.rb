@@ -57,6 +57,25 @@ describe "Static pages" do
     let(:heading)    { 'Help' }
     let(:page_title) { 'Help' }
     it_should_behave_like "all static pages"
+    
+# for signed in users it should display the feed    
+    describe "for signed-in users" do
+      let(:user) { FactoryGirl.create(:user) }
+      before do
+        FactoryGirl.create(:micropost, user: user, content: "Lorem ipsum")
+        FactoryGirl.create(:micropost, user: user, content: "Dolor sit amet")
+        visit signin_path
+        sign_in user
+        visit root_path
+      end
+
+      it "should render the user's feed" do
+        user.feed.each do |item|
+# the first hash sign is Capybara CSS syntax and hash{ is ruby string interpolation
+          expect(page).to have_selector("li##{item.id}", text: item.content)
+        end
+      end
+    
   end
 
   describe "About page" do
@@ -72,4 +91,5 @@ describe "Static pages" do
     let(:page_title) { 'Contact Us' }
     it_should_behave_like "all static pages"
   end
+end
 end

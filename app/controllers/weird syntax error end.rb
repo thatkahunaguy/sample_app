@@ -1,11 +1,13 @@
 class StaticPagesController < ApplicationController
   def home
-    if signed_in?
+  # need an instance variable to build the micropost form when logged in on home
+  # only because that's where we decided to have the form reside
+    if signed_in? do
       @micropost = current_user.microposts.build
       @feed_items = current_user.feed.paginate(page: params[:page])
     end
   end
-  
+
   def help
   end
   
@@ -19,4 +21,5 @@ class StaticPagesController < ApplicationController
   def order
     @user = User.first
   end
+end
 end

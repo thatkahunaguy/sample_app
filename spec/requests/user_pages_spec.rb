@@ -97,7 +97,7 @@ describe "User pages" do
 
 
 # ensure the user is signed in after signup
-       describe "after saving the user" do
+     describe "after saving the user" do
         before { click_button submit }
         let(:user) { User.find_by(email: 'user@example.com') }
 
