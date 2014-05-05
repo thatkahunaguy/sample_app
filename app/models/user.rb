@@ -1,5 +1,7 @@
 class User < ActiveRecord::Base
-
+# dependent destroy below ensures if the user is destroyed so are the microposts
+  has_many :microposts, dependent: :destroy
+  
 # validate presence of name - note the code below is the same as
 # validates(:name, {presence: true})  - parens optional and {} opt on hash last arg
   validates :name, presence: true, length: {maximum: 50}
