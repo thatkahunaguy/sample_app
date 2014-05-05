@@ -1,13 +1,26 @@
 <% provide(:title, @user.name) %>
-<! row and span4 are sidebar elements of Bootstrap !>
+<%# row and span4 are sidebar elements of Bootstrap %>
 <div class="row">
-  <aside class="span4">
-    <section>
+<%# maybe this should be div but there is some css custom sytling for aside %>
+  <aside class="col-md-4">
+
       <h1>
-      <! this is using gravatar service for avatar icons !>
+      <%# this is using gravatar service for avatar icons %>
         <%= gravatar_for @user %>
         <%= @user.name %>
       </h1>
-    </section>
+
   </aside>
+<%# show the microposts and their count paginated %>
+  <div class="col-md-8">
+    <% if @user.microposts.any? %>
+      <h3>Microposts (<%= @user.microposts.count %>)</h3>
+      <ol class="microposts">
+        <%= render @microposts %>
+      </ol>
+      <%# because we're in the user controller we have to explictly define %>
+      <%# @microposts to paginate so it doesn't assume @users %>
+      <%= will_paginate @microposts %>
+    <% end %>
+  </div>
 </div>
