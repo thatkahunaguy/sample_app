@@ -71,13 +71,8 @@ class UsersController < ApplicationController
     end  
 
 # Before filters - these occur before actions in the controller [before_action]
-# signed_in? and current_user? were defined in the sessions helper
-    def signed_in_user
-      unless signed_in?
-        store_location
-        redirect_to signin_url, notice: "Please sign in."
-      end
-    end
+# signed_in?(moved to helpers) and current_user? were defined in the sessions helper
+   
 # note that the @user=... used to be the first part of every action, now it's been
 # removed from edit and update and included as part of the before filter
     def correct_user

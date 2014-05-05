@@ -1,5 +1,8 @@
 class StaticPagesController < ApplicationController
   def home
+  # need an instance variable to build the micropost form when logged in on home
+  # only because that's where we decided to have the form reside
+    @micropost = current_user.microposts.build if signed_in?
   end
 
   def help
